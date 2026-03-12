@@ -1,0 +1,942 @@
+/* 基本設定 */
+html {
+    scroll-behavior: smooth;
+}
+body {
+    font-family: 'Yu Gothic', 'Meiryo', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    color: #333; 
+    background-color: #f8f8f8;
+}
+
+.container {
+    max-width: 1000px; /* コンテンツの最大幅 */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    font-family: 'Georgia', serif;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+p {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ボタンの共通スタイル */
+.btn, .btn-read-more, .btn-contact {
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 10px 30px;
+    border: 1px solid #777; /* ボタンの枠線 */
+    color: #777;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.btn:hover, .btn-read-more:hover, .btn-contact:hover {
+    background-color: #777;
+    color: #fff;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ヘッダーセクション (1枚目のワイヤーフレーム) */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden; /* スライドがはみ出さないように */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;}
+
+/* 背景スライドのコンテナ */
+.hero-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+/* 各スライドの共通設定 */
+.slide-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0; /* 最初は透明 */
+    animation: slider-animation 15s infinite; /* 15秒で1ループ */
+}
+
+/* 画像の指定 */
+.slide-item:nth-child(1) {
+    background-image: url('../image/main-image1.jpg');
+    animation-delay: 0s;
+}
+.slide-item:nth-child(2) {
+    background-image: url('../image/main-image2.jpg');
+    animation-delay: 5s; /* 5秒ずらす */
+}
+.slide-item:nth-child(3) {
+    background-image: url('../image/main-image3.jpg');
+    animation-delay: 10s; /* 10秒ずらす */
+}
+
+/* ふわっと切り替わるアニメーション */
+@keyframes slider-animation {
+    0% { opacity: 0; transform: scale(1.0); }
+    10% { opacity: 1; }
+    33% { opacity: 1; }
+    43% { opacity: 0; transform: scale(1.1); } /* 少しズームアウトしながら消える */
+    100% { opacity: 0; }
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* ここで暗さを調整 */
+    z-index: 1;
+    backdrop-filter: blur(2px); /* ぼかし具合をピクセルで指定 (5px〜10pxがおすすめ) */
+    -webkit-backdrop-filter: blur(8px); /* Safari対応 */
+    z-index: 1;
+}
+
+/* コンテンツをスライドより前に出す */
+.hero-content {
+    z-index: 2;
+    text-align: center;
+}
+.hero-section::before { /* 画像の上にうっすら重ねるレイヤー */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* 少し暗くする */
+}
+
+.hero-content {
+    z-index: 1; /* 重なり順を一番前に */
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 4.5em;
+    margin-bottom: 5px;
+    color: #f8f0de;
+}
+
+.hero-content p {
+    font-size: 1.5em;
+    margin-top: 0;
+    color: #f8f0de;
+}
+
+.hero-content .btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 15px 50px; /* 横幅を広げて存在感を出す */
+    background-color: rgba(0, 0, 0, 0.4); /* 背景を半透明の黒に */
+    color: #f8f0de;
+    border: 2px solid #f8f0de;
+    border-radius: 5px; /* ほんの少し角を丸く */
+    font-size: 1.1rem;
+    font-weight: bold;
+    backdrop-filter: blur(4px); /* 背景をぼかして文字を浮かせる */
+    transition: all 0.3s ease;
+}
+
+.hero-content .btn:hover {
+    background-color: #f8f0de;
+    color: #333;
+    transform: scale(1.05); /* 少し大きくして「押せる感」を出す */
+}
+
+/* コンテンツボックスの共通スタイル*/
+.content-box {
+    background-color: rgba(255, 255, 255, 0.85); /* 半透明の白 */
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px; /* 上下の余白 */
+    margin-bottom: 50px;
+    box-sizing: border-box; /* paddingを含めて幅を計算 */
+}
+
+.content-box h2 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    color: #666;
+}
+
+.content-box ul {
+    margin-bottom: 30px;
+}
+
+.content-box ul li {
+    font-size: 1.05em;
+    margin-bottom: 22px;
+    line-height: 1.8;
+    text-align: left; /* リストは左寄せ */
+    padding-left: 35px; /* アイコン分の左の余白を少し増やす */
+    position: relative;
+    color: #333; /* 文字色を少し濃くして読みやすく */
+}
+
+/* 箇条書きの点をアイコンに変更する */
+.content-box ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.8em;
+    width: 15px; /* 横棒にする */
+    height: 1px;
+    background-color: #fca78d; /* アクセントカラーの細い線 */
+}
+
+.content-box ul li strong {
+    font-size: 1.2rem;
+    display: block; /* 改行させて独立させる */
+    margin-bottom: 5px;
+    color: #333;
+}
+.content-box p {
+    font-size: 1.1em;
+    text-align: center; /* プロフィール文は左寄せ */
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+
+/* プロフィール冒頭の特定のPタグのスタイル */
+.profile-intro-text {
+    font-family: "Playfair Display", "YuMincho", "Hiragino Mincho ProN", "MS Mincho", serif !important;
+    font-size: 1em;
+    text-align: center;
+    line-height: 1.6;
+    margin-bottom: 50px; /* 下のリストとの間隔を少し広げて読みやすく */
+    color: #444; /* 少し濃いめの色で視認性をアップ */
+}
+
+/* セクションの背景画像 */
+.section-bg-image-1 { /* PROFILE */
+    background-color: #f8f0de;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* スクロールしても固定 */
+    padding: 80px 0; /* 上下の余白 */
+}
+
+.section-bg-image-2 { /* 専門 */
+    background-image: url('../image/specialty-image.jpg'); /* 3枚目の背景画像 */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 80px 0;
+}
+
+.section-bg-image-3 { /* 実績 */
+    background-image: url('../image/profile-bg-3.jpg'); /* 4枚目の背景画像 */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 80px 0;
+}
+
+.section-bg-image-4 { /* 強み */
+    background-image: url('../image/profile-bg-4.jpg'); /* 5枚目の背景画像 */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 80px 0;
+}
+
+/* ワークセクション (6,7枚目のワイヤーフレーム) */
+.work-section {
+    padding: 60px 0;
+    background-color: #f8f0de;
+    text-align: center;
+}
+
+.work-title {
+    font-family: 'Playfair Display', serif; /* 英字フォント */
+    font-size: 3.5em;
+    margin-bottom: 50px;
+    color: #333;
+}
+
+.work-section h3 {
+    text-align: left;
+    margin-left: 20px; /* コンテナからの余白 */
+    font-size: 1.8em;
+    color: #444;
+    border-bottom: 2px solid #eee; /* 下線 */
+    padding-bottom: 10px;
+    display: inline-block; /* コンテンツの幅に合わせて下線 */
+    margin-bottom: 30px;
+}
+
+.work-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* レスポンシブ対応 */
+    gap: 30px; /* アイテム間の余白 */
+    margin-bottom: 50px;
+    padding: 0 20px; /* 左右の余白 */
+}
+
+.work-item {
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+}
+
+.work-item:hover {
+    transform: translateY(-12px) scale(1.02); /* 少し高めに浮かせ、わずかに拡大 */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); /* 影を広げて立体感を出す */
+}
+
+.work-item img {
+    width: 100%;
+    height: auto;
+    object-fit: contain; 
+    display: block;
+    background-color: #f8f8f8; 
+}
+/* バナーカルーセル用のスタイル */
+.work-section h4 { /* 正方形バナー、長方形バナーのタイトル */
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #555;
+}
+
+.carousel-container {
+    position: relative;
+    width: 80%;      
+    max-width: 800px;  
+    margin: 0 auto 50px auto;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: transparent; /* 背景のグレーを消す */
+}
+
+.carousel-slide {
+    display: flex; /* 画像を横並びにする */
+    transition: transform 0.5s ease-in-out; /* スライドのアニメーション */
+}
+
+.carousel-slide img {
+    width: 100%; /* 各画像はコンテナの幅いっぱいに */
+    flex-shrink: 0; /* 画像が縮まないように */
+    height: auto; /* 高さは自動調整 */
+    display: block;
+}
+
+/* 正方形バナーの高さ調整 */
+.square-carousel .carousel-slide img {
+    height: auto;
+    aspect-ratio: 1 / 1; /* 正方形を維持 */
+    object-fit: cover; /* 余白を出さない */
+    background-color: transparent;
+    margin: 0;
+}
+/* バナーカルーセル用のスタイル */
+.carousel-container {
+    width: 80%; 
+    max-width: 1000px; 
+    margin: 0 auto 50px auto;
+    border: none; 
+    background-color: transparent; /* グレーの背景を透明に */
+}
+
+.carousel-slide {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide img {
+    flex-shrink: 0;
+    height: auto;
+    display: block;
+}
+
+/* 正方形バナーの高さ調整 - 表示サイズ調整 */
+.square-carousel .carousel-slide img {
+    height: 400px;
+    object-fit: contain;
+    background-color: #f8f8f8; 
+    width: calc(100% / 3 - 20px);
+    margin: 0 10px; /* 画像の左右の隙間 */
+}
+
+/* 正方形バナーの親要素の幅を広げる */
+.square-carousel .carousel-slide {
+    width: calc(100% * var(--total-slides) / 3); /* スライド全体の幅 */
+}
+
+
+/* 長方形バナーの高さ調整 (これは現状維持でOK) */
+.wide-carousel .carousel-slide img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    background-color: transparent;
+}
+
+
+.carousel-prev,
+.carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1.5em;
+    z-index: 10;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-prev:hover,
+.carousel-next:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-prev {
+    left: 10px;
+}
+
+.carousel-next {
+    right: 10px;
+}
+.work-item p {
+    padding: 15px 10px;
+    font-size: 0.9em;
+    color: #666;
+    margin: 0;
+    text-align: center;
+}
+
+/* コンタクトセクション (8枚目のワイヤーフレーム) */
+.contact-section {
+    background-image: url('../image/contact-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 80px 0;
+    color: #333;
+}
+
+.contact-section .content-box {
+    background-color: rgba(255, 255, 255, 0.85); /* 半透明の白 */
+}
+
+.contact-section h2 {
+    font-family: 'Playfair Display', serif; /* 英字フォント */
+    font-size: 2em;
+    margin-bottom: 40px;
+    color: #555;
+}
+
+.contact-section address {
+    font-style: normal; /* 斜体を解除 */
+    margin-bottom: 30px;
+}
+
+.contact-section address p {
+    font-size: 1.1em;
+    line-height: 1.8;
+    text-align: center;
+}
+
+.contact-section .btn-contact {
+    border-color: #555;
+    color: #555;
+}
+
+.contact-section .btn-contact:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+/* フッター */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 0.9em;
+}
+
+/* --- 固定ヘッダーのスタイル --- */
+.header-bar {
+    position: fixed;
+    top: -70px; /* 最初は上に隠しておく */
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.95);
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 900;
+    transition: top 0.4s ease; /* スッと降りてくるアニメ */
+}
+
+/* プロフィール以降で付与するクラス */
+.header-bar.is-show {
+    top: 0;
+}
+
+.header-bar-inner {
+    width: 1000px; /* containerの幅に合わせる */
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.header-logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #333;
+    text-shadow: none !important; 
+}
+
+.header-links {
+    display: flex;
+    gap: 30px;
+}
+
+.header-links a {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #555;
+    transition: color 0.3s;
+    text-shadow: none !important;
+}
+
+.header-links a:hover {
+    color: #fca78d;
+}
+
+/* 詳細ページ全体の背景色 */
+body {
+    background-color: #f8f0de !important;
+}
+
+.work-detail-container {
+    width: 100%;
+    max-width: 1200px; /* 全体の最大幅 */
+    margin: 0 auto;
+    padding-bottom: 100px;
+    text-align: center;
+}
+
+/* 注意書きのスタイル */
+.work-notice {
+    margin-bottom: 40px;
+    padding: 20px;
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* 画像を中央に寄せるための設定 */
+.work-images {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 左右中央寄せ */
+}
+
+.work-images img {
+    width: 40%; 
+    height: auto;
+    display: block;
+    margin-bottom: 0; /* 画像の隙間を消してつなげたい場合は0、開けたいなら10px等 */
+}
+
+/* 1. 全体の幅を揃える */
+.work-gallery2 {
+    max-width: 800px; 
+    margin: 0 auto;   /* 中央寄せ */
+}
+
+/* 2. 中の画像を枠いっぱいに広げる */
+.work-item2 img {
+    width: 100%; 
+    height: auto;     /* 縦横比を維持 */
+    display: block;   /* 下にできる謎の隙間を消す */
+    margin-bottom: 30px; 
+}
+/* スクロールダウンの装飾 */
+.scrolldown {
+    position: absolute;
+    bottom: 20px;
+    right: 3%; /* 右端から3%の位置 */
+    z-index: 2;
+    color: #f8f0de;
+}
+
+/* 文字の部分 */
+.scrolldown span {
+    position: absolute;
+    left: -15px;
+    top: -60px;
+    writing-mode: vertical-rl; /* 文字を縦書きにする */
+    font-family: 'Playfair Display', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+}
+
+/* 矢印（線）の部分 */
+.scrolldown::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 1px;
+    height: 80px; /* 線の長さ */
+    background: #f8f0de; /* 線の色 */
+    animation: scroll-line 2s cubic-bezier(0.7, 0, 0.3, 1) infinite;
+}
+
+/* 線の動きのアニメーション */
+@keyframes scroll-line {
+    0% {
+        transform: scale(1, 0);
+        transform-origin: 0 0;
+    }
+    50% {
+        transform: scale(1, 1);
+        transform-origin: 0 0;
+    }
+    50.1% {
+        transform: scale(1, 1);
+        transform-origin: 0 100%;
+    }
+    100% {
+        transform: scale(1, 0);
+        transform-origin: 0 100%;
+    }
+}
+/* --- ハンバーガーボタンのスタイル --- */
+.menu-toggle {
+    display: none; /* デスクトップでは隠す */
+    width: 30px;
+    height: 20px;
+    position: relative;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.menu-toggle span {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #333;
+    transition: all 0.3s;
+}
+
+.menu-toggle span:nth-child(1) { top: 0; }
+.menu-toggle span:nth-child(2) { top: 9px; }
+.menu-toggle span:nth-child(3) { top: 18px; }
+
+/* ボタンがアクティブ（×印）になった時 */
+.menu-toggle.is-active span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+.menu-toggle.is-active span:nth-child(2) { opacity: 0; }
+.menu-toggle.is-active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+/* 写真のスタイル */
+.profile-image {
+    flex: 0 0 300px; /* 幅を300pxに固定 */
+}
+
+.profile-image img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover; /* 縦横比を保って切り抜き */
+    border-radius: 50%; /* 丸くする */
+    border: 5px solid #fff; /* 白い縁取りで清潔感アップ */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* 文章エリアの調整 */
+.profile-text {
+    flex: 1; /* 残りの幅をすべて使う */
+}
+
+.profile-text h2 {
+    text-align: left; /* 見出しを左寄せに */
+    margin-bottom: 20px;
+}
+
+.profile-text .profile-intro-text {
+    text-align: left; /* イントロ文を左寄せに */
+    padding-left: 0;
+    
+}
+
+.profile-text .btn-read-more {
+    margin: 20px 0 0 0; /* ボタンも左寄せに */
+}
+
+/* プロフィール上部（タイトルと導入文） */
+.profile-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.profile-header h2 ,.specialty-section h2,.work-section h2{
+    text-align: center;
+    font-size: 3em;
+    color: #666;
+    letter-spacing: 0.05em; /* 文字と文字の間隔を広げる */
+    margin-bottom: 0;
+}
+.profile-header h3{
+    margin-top: 0;
+}
+.container h3 .work-section h3{
+    font-size: 1.5em;
+}
+
+
+/* 画像とリストの横並び設定 */
+.profile-main-content {
+    display: flex;
+    align-items: center; /* 上揃え（中央ならcenter） */
+    gap: 40px;
+}
+
+/* 写真のサイズ固定 */
+.profile-image {
+    flex: 0 0 300px;
+}
+
+/* リスト部分（右側） */
+.profile-list {
+    flex: 1;
+
+}
+
+/* リスト全体のテキストサイズを調整 */
+.profile-list ul li,.container ul li {
+    font-size: 0.82rem; 
+    line-height: 1.6; 
+    color: #555;
+}
+
+.profile-list ul li strong,.container ul li strong {
+    font-size: 1rem; 
+    margin-bottom: 3px;
+}
+.specialty-section ul li {
+    font-size: 1rem; 
+    color: #555;  
+    line-height: 1.5;
+    margin-bottom: 40px;
+}
+.specialty-section ul li strong {
+    font-size: 1.2rem; 
+    display: block;      /* 改行させる */
+    margin-bottom: 1px; 
+    line-height: 1.0;    /* 見出し自体の行間をギュッと詰める */
+    color: #333;
+}
+.contact-section h2{
+    font-size: 1.8em;
+}
+.contact-section address{
+    font-size: 1.1em;
+    margin-bottom: 50px;
+}
+/* PAGE TOP ボタンの基本スタイル */
+.page-top {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    z-index: 100;
+    width: 60px;
+    height: 60px;
+    background-color: #333; /* 背景色 */
+    color: #fff;
+    border-radius: 50%; /* 丸くする */
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;           /* 最初は透明 */
+    visibility: hidden;    /* 最初は非表示 */
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* テキスト（PAGE TOP）のスタイル */
+.page-top span {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+}
+
+/* 上向き矢印を擬似要素で作る */
+.page-top::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-top: 2px solid #fff;
+    border-right: 2px solid #fff;
+    transform: rotate(-45deg);
+    margin-top: 5px;
+}
+
+/* 表示された時のクラス（JSで付け外しします） */
+.page-top.is-show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ホバーした時 */
+.page-top:hover {
+    background-color: #fca78d; /* アクセントカラーに変える */
+    transform: translateY(-5px); /* 少し上に動く */
+}
+/* ============================================================
+   レスポンシブデザインの最適化
+   ============================================================ */
+
+/* --- タブレットサイズ (1024px以下) --- */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 95%; /* 画面幅に合わせて余裕を持たせる */
+    }
+    
+    .profile-main-content {
+        gap: 20px; /* 画像とリストの間隔を少し詰める */
+    }
+
+    .profile-image {
+        flex: 0 0 250px; /* 画像を少し小さく */
+    }
+}
+
+/* --- スマートフォン & タブレット縦 (768px以下) --- */
+@media (max-width: 768px) {
+    /* 1. 共通設定：見出しのサイズダウン */
+    .profile-header h2, .specialty-section h2, .work-section h2 {
+        font-size: 2.2em; /* スマホでは3emは大きすぎるので調整 */
+    }
+
+    /* 2. プロフィール：縦並びに切り替え */
+    .profile-main-content {
+        flex-direction: column; 
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-image {
+        flex: 0 0 auto;
+        width: 180px; /* スマホサイズ */
+        margin-bottom: 20px;
+    }
+
+    .profile-image img {
+        height: 180px;
+    }
+
+    .profile-list ul li {
+        text-align: left; /* リストの中身は左寄せの方が読みやすい */
+    }
+
+    /* 3. 実績ギャラリー：1列または2列に調整 */
+    .work-gallery {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 画面幅に合わせて自動調整 */
+        gap: 15px;
+    }
+
+    /* 4. カルーセル：幅を広げる */
+    .carousel-container {
+        width: 95%;
+    }
+    
+    /* 5. ヘッダー：ハンバーガーメニューの調整 */
+    .header-bar-inner {
+        width: 100%;
+    }
+    
+    .menu-toggle {
+        display: block; /* スマホでボタンを表示 */
+    }
+}
+
+/* --- 小型スマートフォン (480px以下) --- */
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2.5em; /* キャッチコピーを画面内に収める */
+    }
+
+    .content-box {
+        padding: 30px 15px; /* ボックス内の余白をタイトに */
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    /* 実績：スマホでは1枚ずつ大きく見せる */
+    .work-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    /* ボタンの幅を広げて押しやすく */
+    .btn, .btn-read-more, .btn-contact {
+        width: 90%;
+        padding: 12px;
+    }
+
+    /* フッター：文字サイズ調整 */
+    footer {
+        font-size: 0.8em;
+    }
+}
